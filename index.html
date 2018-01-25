@@ -1,0 +1,66 @@
+<html>
+    <head>
+	<title>
+	    Testing from Form to Database
+	</title>
+	<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript">
+	    $(document).ready(function() {
+		var formArray = new Array();
+		
+		/*$('#submitBtn').click(function() {
+		    $('#testing').find(':input').each(function() {
+			formArray.push($(this).attr("name"));
+		    });
+		    
+		    $.ajax({
+			type: "POST",
+			url: "createDb.php",
+			data: { formArray: formArray },
+			success: function(msg){
+			    console.log(msg);
+			}
+		    });
+		});*/
+		
+		
+		$('#submitBtn').click(function() {
+		    var formType='';
+		    var htmlForm = $.parseHTML($('#createForm').val().trim());		    
+		    formType += $(htmlForm).find("input[type=text],textarea,select").map(function() { 
+				    return this.name;				    
+				}).get().join();
+		    //console.log(formType);
+		    $.ajax({
+			type: "POST",
+			url: "createDb.php",
+			data: { formArray: formType },
+			success: function(msg){
+			    console.log(msg);
+			}
+		    });
+		});
+		
+		
+	    });
+	</script>
+    </head>
+    <body>
+	<form name="testing" id="testing">
+	    <fieldset>
+		<legend>Log In</legend>
+		<label>Username: <input type="text" name="txtusername"></label>
+		<label>Password: <input type="password" name="txtpassword"></label>
+		
+		<textarea name="createForm" id ="createForm" rows="10" cols="50">
+		    
+		</textarea>
+		
+		
+		
+		<!--<input type="submit" value="Submit">-->
+	    </fieldset>	    
+	</form>
+	<button name="submitBtn" id="submitBtn">Click me</button>
+    </body>
+</html>
